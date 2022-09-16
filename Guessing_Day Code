@@ -1,0 +1,91 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+int ref_year = 1900 ;
+
+
+void Main_Menu();
+void Day_name();
+void detect_day(int day);
+
+int main(void) {
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
+	Day_name();
+	return EXIT_SUCCESS;
+}
+void Main_Menu(){
+	puts("1. Find Out the day");
+	puts("2. Print All the days of the month");
+	puts("3. Exit");
+	puts("Enter your choice");
+}
+void Day_name(){
+	int day , month , year;
+	int diff ,non_leap_counter,tot_num , reminder;
+	int count = 0 ;
+	printf("Enter your Date (DD , MM ,YYYY) \n");
+	scanf("%d" , &day);
+	if(day>31){
+		printf("enter valid day\n");
+		day = 1 ;
+	}
+	scanf("%d" , &month);
+	if(month == 0 || month > 12){
+		printf("enter valid month\n");
+		month = 1 ;
+	}
+
+	scanf("%d" , &year);
+	if (year<ref_year){
+		printf("Enter valid year\n");
+		year = ref_year ;
+	}
+	printf("your date %d / %d / %d \n",day,month , year);
+	diff = year - ref_year;
+	while(ref_year<=year){
+		if(year % 100 == 0) {
+			if(year % 400 == 0){
+				++count ;
+			}
+		}
+		else {
+			if(year % 4 == 0){
+				++count  ;
+			}
+		}
+		-- year ;
+	}
+	printf("%d\n",count);
+	non_leap_counter = diff - count ;
+	printf("%d\n",non_leap_counter);
+	tot_num = 366 * count + 365*non_leap_counter;
+	printf("%d\n",tot_num);
+	reminder = tot_num % 7 ;
+	detect_day(reminder) ;
+}
+void detect_day(int day){
+	switch(day){
+	case 0:
+		printf("Monday\n");
+		break;
+	case 1:
+		printf("Tuesday\n");
+		break;
+	case 2:
+		printf("Wendesday\n");
+		break;
+	case 3:
+		printf("Thursday\n");
+		break;
+	case 4:
+		printf("Friday\n");
+		break;
+	case 5:
+		printf("Saturday\n");
+		break;
+	case 6:
+		printf("Sunday\n");
+		break;
+	}
+}
